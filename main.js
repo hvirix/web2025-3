@@ -19,3 +19,16 @@ if (!fs.existsSync(options.input)) {
   return;
 }
 
+fs.readFile(options.input, 'utf8', (err, data) => {
+  let parsedData = JSON.parse(data);
+  const finalData = parsedData
+    .map((item) => `${item.exchangedate}:${item.rate}`)
+    .join('\n');
+
+  if (options.output){
+    fs.writeFile(options.output, finalData, 'utf-8', (err) => {})
+  }
+  if(options.display){
+    console.log(finalData);
+  }
+})
